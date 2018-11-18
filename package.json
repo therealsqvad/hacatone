@@ -23,6 +23,7 @@
     "not op_mini all"
   ],
   "devDependencies": {
+    "@material-ui/core": "^3.5.1",
     "eslint": "^5.9.0",
     "eslint-config-airbnb": "^17.1.0",
     "localforage": "^1.7.3",

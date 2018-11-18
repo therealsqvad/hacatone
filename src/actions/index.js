@@ -19,7 +19,7 @@ export const toggleTodo = id => ({
 });
 
 export const initTodo = todos => ({
-  type: 'TOGGLE_TODO',
+  type: 'INIT',
   todos
 });
 
