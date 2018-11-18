@@ -23,9 +23,9 @@ export const initTodo = todos => ({
   todos
 });
 
-export const actLogin = user => ({
+export const actLogin = name => ({
   type: 'LOGIN',
-  user
+  name
 });
 
 export const VisibilityFilters = {

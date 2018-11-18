@@ -17,19 +17,20 @@ const user = '123';
 let todo;
 
 localforage.getItem(user).then(todos => {
-  console.log(todos);
+  // console.log(todos);
   if (todos) {
   // Создаём data URI или ещё как-нибудь помещаем фото в тег img.
     todo = todos.planes;
-    console.log(todo);
+    // console.log(todo);
 
-    console.log('getstate', store.getState());
+    // console.log('getstate', store.getState());
 
     store.dispatch(initTodo(todo));
   }
 });
 
 store.subscribe(() => {
+  
   const currentState = store.getState();
   const saveObj = { password: '123', isAdmin: false, planes: currentState.todos };
 

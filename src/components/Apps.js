@@ -11,6 +11,7 @@ import Register from './Register';
 import Login from './Login';
 import Logout from './Logout';
 import Footer from './Footer';
+import '../style.css';
 // import AddTodo from '../containers/AddTodo';
 import VisibleTodoList from '../containers/VisibleTodoList';
 import Modal from './Modal';
@@ -61,7 +62,7 @@ class Apps extends Component {
   handleSubmitLogin(user) {
     localforage.getItem(user.name)
       .then(value => {
-        console.log(value);
+        // console.log(value);
         if (value.password === user.password) {
           this.setState({
             name: '123',
@@ -69,14 +70,12 @@ class Apps extends Component {
             isAdmin: value.isAdmin,
             isAuth: true
           });
-          console.log(this.state);
-          // store.dispatch(actLogin(value.name));
+          console.log('login', this.state.name);
+
+          store.dispatch(actLogin(this.state.name));
         } else {
           alert('Неправильный пароль');
         }
-      })
-      .catch(err => {
-        alert('Такого пользователя не существует');
       });
     // console.log(localforage.getItem(user.name));
   }
@@ -146,21 +145,22 @@ class Apps extends Component {
           this.state.isAuth
             && (
               <div>
-                <Logout
-                  name={this.state.name}
-                  isAuth={this.state.isAuth}
-                  handleSubmit={e => this.handleSubmitLogout(e)}
-                />
+
 
                 <Modal />
-                <footer className="footer">
-                  <Button onClick={this.handleClick} variant="contained" color="primary">Выполнить</Button>
-                </footer>
 
 
                 {/* <AddTodo /> */}
                 <VisibleTodoList />
                 <Footer />
+                <footer className="footer">
+                  <Button onClick={this.handleClick} variant="contained" color="primary">Выполнить</Button>
+                  <Logout
+                    name={this.state.name}
+                    isAuth={this.state.isAuth}
+                    handleSubmit={e => this.handleSubmitLogout(e)}
+                  />
+                </footer>
               </div>
             )
         }

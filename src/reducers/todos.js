@@ -18,7 +18,7 @@ const todos = (state = [], action) => {
         { ...todo, completed: !todo.completed } :
         todo));
     case 'INIT': {
-      console.log(action.todos);
+      // console.log(action.todos);
 
       return action.todos;
     }
