@@ -44,6 +44,11 @@ export class Modal extends Component {
         console.log(this.state);
     }
 
+    handleClose = () => {
+        const modal = document.querySelector('.Modal');
+        modal.style.display = 'none';
+    }
+
     render(){
         return(
             <div className = 'Modal' id = 'Modal'>
@@ -71,6 +76,7 @@ export class Modal extends Component {
                              name="text"/> 
                         </div>
                         <Button type = 'submit' variant = 'contained' color = 'primary'>Отправить</Button>
+                        <span className = 'span'  onClick = {this.handleClose}>&times;</span>
                     </form>
                 </div>
             </div>
