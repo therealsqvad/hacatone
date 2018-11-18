@@ -35,8 +35,10 @@ export class Modal extends Component {
 
     changeDate = event => {
         const temp = event.target.value;
+        const temp_arr = temp.split('-');
+        const new_temp = temp_arr[2] + '-' + temp_arr[1] + '-' + temp_arr[0];
         this.setState ({
-            date : temp
+            date : new_temp
         });
         console.log(temp);
         console.log(this.state);
