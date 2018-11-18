@@ -1,9 +1,11 @@
 import React from 'react';
+import Button from '@material-ui/core/Button';
 import PropTypes from 'prop-types';
+
 
 const Link = ({ active, children, onClick }) => (
   // eslint-disable-next-line react/button-has-type
-  <button
+  <Button
     onClick={onClick}
     disabled={active}
     style={{
@@ -11,7 +13,7 @@ const Link = ({ active, children, onClick }) => (
     }}
   >
     {children}
-  </button>
+  </Button>
 );
 
 Link.propTypes = {

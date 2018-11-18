@@ -1,9 +1,21 @@
+/* eslint-disable jsx-a11y/label-has-associated-control */
+/* eslint-disable jsx-a11y/label-has-for */
+/* eslint-disable react/sort-comp */
+/* eslint-disable import/no-named-as-default */
 /* eslint-disable react/destructuring-assignment */
 import React, { Component } from 'react';
 import localforage from 'localforage';
+import Button from '@material-ui/core/Button';
+import { Checkbox } from '@material-ui/core';
 import Register from './Register';
 import Login from './Login';
 import Logout from './Logout';
+import Footer from './Footer';
+// import AddTodo from '../containers/AddTodo';
+import VisibleTodoList from '../containers/VisibleTodoList';
+import Modal from './Modal';
+import store from '../index';
+import { actLogin } from '../actions';
 
 class Apps extends Component {
   constructor() {
@@ -12,8 +24,15 @@ class Apps extends Component {
       name: '',
       password: '',
       isAdmin: false,
-      isAuth: false
+      isAuth: false,
+      isReg: true
     };
+  }
+
+  handleClick = () => {
+    const modal = document.querySelector('.Modal');
+
+    modal.style.display = 'flex';
   }
 
   handleInputChange(e) {
@@ -42,14 +61,16 @@ class Apps extends Component {
   handleSubmitLogin(user) {
     localforage.getItem(user.name)
       .then(value => {
+        console.log(value);
         if (value.password === user.password) {
           this.setState({
-            name: value.name,
+            name: '123',
             password: value.password,
             isAdmin: value.isAdmin,
             isAuth: true
           });
           console.log(this.state);
+          // store.dispatch(actLogin(value.name));
         } else {
           alert('Неправильный пароль');
         }
@@ -76,7 +97,14 @@ class Apps extends Component {
       });
   }
 
+  handleReg = e => {
+    e.preventDefault();
+    this.setState({ isReg: e.target.checked });
+  }
+
   render() {
+    const { isReg } = this.state;
+
     return (
       <div className="App">
 
@@ -84,22 +112,33 @@ class Apps extends Component {
           !this.state.isAuth
             && (
               <div>
-                <Register
-                  name={this.state.name}
-                  password={this.state.password}
-                  isAdmin={this.state.isAdmin}
-                  isAuth={this.state.isAuth}
-                  handleInputChange={e => this.handleInputChange(e)}
-                  handleSubmit={e => this.handleSubmit(e)}
-                />
-                <Login
-                  name={this.state.name}
-                  password={this.state.password}
-                  isAdmin={this.state.isAdmin}
-                  isAuth={this.state.isAuth}
-                  handleInputChange={e => this.handleInputChange(e)}
-                  handleSubmit={e => this.handleSubmitLogin(e)}
-                />
+                <Checkbox id="Reg" onChange={e => this.handleReg(e)} />
+                <label htmlFor="Reg">Зарегистрироваться ?</label>
+                <div hidden={isReg}>
+                  <Register
+                    name={this.state.name}
+                    password={this.state.password}
+                    isAdmin={this.state.isAdmin}
+                    isAuth={this.state.isAuth}
+                    handleInputChange={e => this.handleInputChange(e)}
+                    handleSubmit={e => this.handleSubmit(e)}
+                    hidden={this.state.isReg}
+                  />
+
+                </div>
+                <div hidden={!isReg}>
+                  {' '}
+                  <Login
+                    name={this.state.name}
+                    password={this.state.password}
+                    isAdmin={this.state.isAdmin}
+                    isAuth={this.state.isAuth}
+                    handleInputChange={e => this.handleInputChange(e)}
+                    handleSubmit={e => this.handleSubmitLogin(e)}
+                  />
+                  {' '}
+
+                </div>
               </div>
             )
         }
@@ -112,6 +151,16 @@ class Apps extends Component {
                   isAuth={this.state.isAuth}
                   handleSubmit={e => this.handleSubmitLogout(e)}
                 />
+
+                <Modal />
+                <footer className="footer">
+                  <Button onClick={this.handleClick} variant="contained" color="primary">Выполнить</Button>
+                </footer>
+
+
+                {/* <AddTodo /> */}
+                <VisibleTodoList />
+                <Footer />
               </div>
             )
         }

@@ -4,39 +4,46 @@ import { render } from 'react-dom';
 import { createStore } from 'redux';
 import { Provider } from 'react-redux';
 import localforage from 'localforage';
-import App from './components/App';
+import Apps from './components/Apps';
 import rootReducer from './reducers';
 import { initTodo } from './actions';
 
-const usersBD = localforage.createInstance({ name: 'localforage', storeName: 'users' });
+// const usersBD = localforage.createInstance({ name: 'localforage', storeName: 'users' });
 
 const store = createStore(rootReducer);
-const user = 'guest';
+// const currentState = store.getState();
+// const user = currentState.name;
+const user = '123';
 let todo;
 
-usersBD.getItem('guest').then(todos => {
+localforage.getItem(user).then(todos => {
   console.log(todos);
+  if (todos) {
   // Создаём data URI или ещё как-нибудь помещаем фото в тег img.
-  todo = todos.planes;
-  console.log(todo);
+    todo = todos.planes;
+    console.log(todo);
 
-  console.log(store.getState());
+    console.log('getstate', store.getState());
 
-  store.dispatch(initTodo(todo));
+    store.dispatch(initTodo(todo));
+  }
 });
 
 store.subscribe(() => {
   const currentState = store.getState();
   const saveObj = { password: '123', isAdmin: false, planes: currentState.todos };
 
-  usersBD.setItem(user, saveObj);
+  localforage.setItem(user, saveObj);
   console.log('new state', store.getState());
 });
 
+// console.log(store.getState())
 
 render(
   <Provider store={store}>
-    <App />
+    <Apps />
   </Provider>,
   document.getElementById('root')
 );
+
+export default store;

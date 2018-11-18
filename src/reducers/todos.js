@@ -21,7 +21,6 @@ const todos = (state = [], action) => {
       console.log(action.todos);
 
       return action.todos;
-      // return state;
     }
     default:
       return state;

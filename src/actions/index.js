@@ -1,8 +1,8 @@
-let nextTodoId = 0;
+// let nextTodoId = (new Date()).getTime();
 
-export const addTodo = (text, description, deadline) => ({
+export const addTodo = (text, description, deadline, id = 0) => ({
   type: 'ADD_TODO',
-  id: nextTodoId++,
+  id: id + 1,
   text,
   description,
   deadline
@@ -21,6 +21,11 @@ export const toggleTodo = id => ({
 export const initTodo = todos => ({
   type: 'INIT',
   todos
+});
+
+export const actLogin = user => ({
+  type: 'LOGIN',
+  user
 });
 
 export const VisibilityFilters = {
